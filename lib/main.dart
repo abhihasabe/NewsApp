@@ -21,7 +21,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   final UserRepository _userRepository = UserRepository();
-  final NewsArticleRepository _newsArticalRepository = NewsArticleRepository();
+  final NewsArticleRepository _newsArticlesRepository = NewsArticleRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
               create: (context) => RegisterBloc(userRepository: _userRepository),
             ),
             BlocProvider(
-              create: (context) => ArticleBloc(repository: _newsArticalRepository),
+              create: (context) => ArticleBloc(repository: _newsArticlesRepository),
             ),
           ],
           child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
