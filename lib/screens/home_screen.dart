@@ -7,6 +7,7 @@ import 'package:firebaseLoginBloc/model/news_model.dart';
 import 'package:firebaseLoginBloc/screens/news_detail_screen.dart';
 import 'package:firebaseLoginBloc/theme/colors.dart';
 import 'package:firebaseLoginBloc/utils/utils.dart';
+import 'package:firebaseLoginBloc/widgets/news_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -61,7 +62,7 @@ class _State extends State<HomePage> {
               } else if (state is ArticleLoadingState) {
                 return Utils.buildLoading();
               } else if (state is ArticleLoadedState) {
-                return buildArticleList(state.articles);
+                return News(articles:state.articles);
               } else if (state is ArticleErrorState) {
                 return buildErrorUi(state.message);
               }
@@ -82,44 +83,5 @@ class _State extends State<HomePage> {
         ),
       ),
     );
-  }
-
-  Widget buildArticleList(List<Articles> articles) {
-    return ListView.builder(
-      itemCount: articles.length,
-      itemBuilder: (ctx, pos) {
-        return InkWell(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              articles[pos].urlToImage != null
-                  ? Image.network(
-                      articles[pos].urlToImage,
-                      fit: BoxFit.cover,
-                      height: 180,
-                      width: MediaQuery.of(context).size.width,
-                    )
-                  : Container(),
-              Text(articles[pos].title,
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-              SizedBox(
-                height: 15,
-              )
-            ],
-          ),
-          onTap: () {
-            navigateToArticleDetailPage(context, articles[pos]);
-          },
-        );
-      },
-    );
-  }
-
-  void navigateToArticleDetailPage(BuildContext context, Articles article) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return ArticleDetailPage(
-        article: article,
-      );
-    }));
   }
 }

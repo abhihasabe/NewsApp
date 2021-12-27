@@ -26,8 +26,14 @@ class NewsApiClient {
       }
     } on SocketException {
       throw FetchDataException('No Internet Connection');
+    } on HttpException {
+      throw TimeOutException('No Service Found');
+    } on FormatException {
+      throw TimeOutException('Invalid Response format');
     } on TimeOutException {
       throw TimeOutException('Time Out Exception');
+    } catch (e) {
+      throw Exception();
     }
   }
 
